@@ -10,11 +10,19 @@ type TimeUnit = {
   labels: string[]
 }
 
+type ClockDimensions = {
+  width: number
+  height: number
+  centerX: number
+  centerY: number
+  maxRadius: number
+}
+
 export default function Clock() {
   // Reference to the SVG element for drawing
   const clockFaceRef = useRef<SVGSVGElement>(null)
   // Reference to store animation frame for cleanup
-  const clockAnimationRef = useRef<number>()
+  const clockAnimationRef = useRef<number | undefined>(undefined)
   // State to store container dimensions
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   // Reference to the container div
@@ -138,7 +146,7 @@ export default function Clock() {
   /**
    * Creates the reference line element
    */
-  const createReferenceLine = (dimensions: typeof clockDimensions) => {
+  const createReferenceLine = (dimensions: ClockDimensions) => {
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line")
     const { centerX, centerY, maxRadius } = dimensions
 
@@ -155,7 +163,7 @@ export default function Clock() {
   /**
    * Creates a rotating time disc with numbers and tick marks
    */
-  const createTimeDisc = (timeUnit: TimeUnit, dimensions: typeof clockDimensions) => {
+  const createTimeDisc = (timeUnit: TimeUnit, dimensions: ClockDimensions) => {
     const { centerX, centerY, maxRadius } = dimensions
     const currentRadius = maxRadius * timeUnit.radius
     const rotationAngle = (timeUnit.value / timeUnit.total) * Math.PI * 2
@@ -203,7 +211,10 @@ export default function Clock() {
   }
 
   return (
-    <div ref={containerRef} className="relative grid place-items-center h-screen w-full bg-black p-4 sm:p-6 md:p-8 overflow-hidden">
+    <div
+      ref={containerRef}
+      className="relative grid place-items-center h-screen w-full bg-black p-4 sm:p-6 md:p-8 overflow-hidden"
+    >
       <svg
         ref={clockFaceRef}
         width={dimensions.width}
@@ -212,9 +223,7 @@ export default function Clock() {
         className="max-w-full max-h-full"
         aria-label="Smooth disc clock showing time and date"
       />
-      <span className="fixed bottom-2 right-4 text-xs text-muted-foreground">
-        &copy; werzq.cc
-      </span>
+      <span className="fixed bottom-2 right-4 text-xs text-muted-foreground">&copy; werzq.cc</span>
     </div>
   )
 }
