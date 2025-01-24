@@ -213,7 +213,7 @@ export default function Clock() {
   return (
     <div
       ref={containerRef}
-      className="relative grid place-items-center h-screen w-full bg-black p-4 sm:p-6 md:p-8 overflow-hidden"
+      className="fixed inset-0 grid place-items-center h-screen w-full bg-black p-4 sm:p-6 md:p-8 overflow-hidden"
     >
       <svg
         ref={clockFaceRef}
