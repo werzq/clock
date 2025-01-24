@@ -223,7 +223,14 @@ export default function Clock() {
         className="max-w-full max-h-full"
         aria-label="Smooth disc clock showing time and date"
       />
-      <span className="fixed bottom-2 right-4 text-xs text-muted-foreground">&copy; werzq.cc</span>
+      <a
+        href="https://werzq.cc"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-2 right-4 text-xs text-muted-foreground"
+      >
+        &copy; werzq.cc
+      </a>
     </div>
   )
 }
